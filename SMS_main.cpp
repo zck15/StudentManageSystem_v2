@@ -474,17 +474,18 @@ void TeaGradesInput(void)
 					cout<<strTeaGIHead1<<course->GetName()<<strTeaGIHead2<<course->GetNumber();
 					cout<<strTeaGIHead3<<course->GetCredit()<<strTeaGIHead4<<course->CheckGrade()<<endl;
 					cout<<strLine;
-					cout<<strTeaGI2;
 				}
+				cout<<strTeaGI2;
 				long id;
 				INPUT_INT_L(id,-1);
 				if(id==-1)		//查看未录入成绩学生名单
 				{
 					course->StuSort_id();
-					for(int i=0; i<course->Getnumber; i++)
+					cout<<strStuShowHead<<endl;
+					for(int i=0; i<course->Getnumber(); i++)
 					{
-						long id=GetStudentId(i);
-						if(GetGrade(id)==-1)
+						long id=course->GetStudentId(i);
+						if(course->GetGrade(id)==-1)
 							data.StuSearch(id)->StuShow();
 					}
 					clear=false;
@@ -521,7 +522,8 @@ void TeaGradesInput(void)
 					{
 						cout<<strTeaGIConfirm3<<course->GetGrade(id);
 						cout<<strTeaGIConfirm4;
-						INPUT_INT_LU(s,0,1)
+						INPUT_INT_LU(s,0,1);
+						clear=false;
 					}
 					if(s==1)
 					{
@@ -529,12 +531,14 @@ void TeaGradesInput(void)
 						cout<<strTeaGI3<<id<<strTeaGI4<<student->GetName();
 						cout<<strTeaGI5<<student->GetClass()<<strTeaGI6;
 						int grade;
-						INPUT_INT_L(grade,-1)
+						INPUT_INT_L(grade,-1);
 						if(grade!=-1)
 							course->SetGrade(id,grade);
+						clear=false;
 					}
+					cout<<endl;
 				}
-			}
+			}while(1);
 		}
 	}while(1);
 	return;
