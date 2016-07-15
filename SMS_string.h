@@ -59,7 +59,8 @@
                            ★    3.课程管理    ★\n\
                            ★    4.选课管理    ★\n\
                            ★    5.成绩录入    ★\n\
-                           ★    6.成绩查询    ★\n\
+                           ★    6.成绩修改    ★\n\
+                           ★    7.成绩查询    ★\n\
                            ★    0.退出登录    ★\n\
                            ★                  ★\n\
                            ▇▇▇▇▇▇▇▇▇▇▇\n\
@@ -172,6 +173,23 @@
 #define strTeaGIConfirm2 "名学生的成绩未登记，确定要退出么？（0.退出 1.继续录入）\n"
 #define strTeaGIConfirm3 "该学生的成绩信息已存在："
 #define strTeaGIConfirm4 "。是否要修改？（1.是 0.否）\n"
+#define strTeaGIConfirm5 "该课程所有学生的成绩均已登记，是否返回上一级？（1.继续修改 0.返回上一级）\n"
+
+#define strTeaGQMenu "\n\n\n\n\n\n\
+                                ☆成绩查询☆\n\
+                           ▇▇▇▇▇▇▇▇▇▇▇\n\
+                           ★                  ★\n\
+                           ★   1.按学生查询   ★\n\
+                           ★   2.按班级查询   ★\n\
+                           ★   3.按课程查询   ★\n\
+                           ★   0.返回上级     ★\n\
+                           ★                  ★\n\
+                           ▇▇▇▇▇▇▇▇▇▇▇\n\
+                           "
+
+#define strTeaGQStu1 "请输入学生学号（0.返回上一级）："
+
+
 
 #define strStuCC1 "所有课程：\n"
 #define strStuCC2 "已选课程：\n"

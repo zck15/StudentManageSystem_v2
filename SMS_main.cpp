@@ -28,6 +28,7 @@ void TeaStuManage(void);
 void TeaCouManage(void);
 void TeaCouChooseManage(void);
 void TeaGradesInput(void);
+void TeaGradesChange(void);
 void TeaGradesQuery(void);
 
 //三级函数 of TeaStuManage
@@ -39,6 +40,11 @@ void TeaStuChange(void);
 void TeaCouAdd(void);
 void TeaCouDelete(void);
 void TeaCouChange(void);
+
+//三级函数 of TeaGradesQuery
+void TeaGQStu(void);
+void TeaGQCla(void);
+void TeaGQCou(void);
 
 Data data;
 
@@ -177,6 +183,9 @@ void TeaLogin(void)
 			TeaGradesInput();
 			break;
 		case 6:
+			TeaGradesChange();
+			break;
+		case 7:
 			TeaGradesQuery();
 			break;
 		case 0:
@@ -466,6 +475,16 @@ void TeaGradesInput(void)
 			bool clear = true;		//是否清空屏幕并先显示Head
 			do
 			{
+				if(course->CheckGrade()==0)	//所有学生成绩均已登记
+				{
+					system("cls");
+					cout<<strTeaGIConfirm5;
+					int i;
+					INPUT_INT_LU(i,0,1);
+					if(i==0)
+						break;
+					clear=true;
+				}
 				if(clear)
 				{
 					system("cls");
@@ -523,7 +542,7 @@ void TeaGradesInput(void)
 						cout<<strTeaGIConfirm3<<course->GetGrade(id);
 						cout<<strTeaGIConfirm4;
 						INPUT_INT_LU(s,0,1);
-						clear=false;
+						clear=true;
 					}
 					if(s==1)
 					{
@@ -533,10 +552,12 @@ void TeaGradesInput(void)
 						int grade;
 						INPUT_INT_L(grade,-1);
 						if(grade!=-1)
+						{
+							student->SetGrade(course->GetNumber(),grade);
 							course->SetGrade(id,grade);
-						clear=false;
+						}
+						clear=true;
 					}
-					cout<<endl;
 				}
 			}while(1);
 		}
@@ -544,9 +565,39 @@ void TeaGradesInput(void)
 	return;
 }
 
+void TeaGradesChange(void)
+{
+	return;
+}
+
 void TeaGradesQuery(void)
 {
+	bool quit=false;
+	do
+	{
+		system("cls");
+		cin.clear();
+		cin.sync();
+		int iMenu=-1;
+		cout<<strTeaGQMenu;
 
+		INPUT_INT_LU(iMenu,0,3);
+		switch(iMenu)
+		{
+		case 1:
+			TeaGQStu();
+			break;
+		case 2:
+			TeaGQCla();
+			break;
+		case 3:
+			TeaGQCou();
+			break;
+		case 0:
+			quit = true;
+			break;
+		}
+	}while(!quit);
 	return;
 }
 
@@ -772,5 +823,44 @@ void TeaCouChange(void)
 		cout<<strTeaCC3;
 		INPUT_INT_LU(again,0,1);
 	}while(again);
+	return;
+}
+
+//三级函数 of TeaGradesQuery
+void TeaGQStu(void)
+{
+	long id;
+	while(1)
+	{
+		system("cls");
+		cout<<strTeaGQStu1;
+		INPUT_INT_L(id,0);
+		if(id==0)	break;
+
+		Student* student=data.StuSearch(id);
+
+		student->CouSort();
+		
+		system("cls");
+		cout<<strStuGQHead1<<student->GetName();
+		cout<<strStuGQHead2<<student->GetId();
+		cout<<strStuGQHead3<<student->GetClass();
+		cout<<strStuGQHead4<<setfill('0')<<setprecision(1)<<student->GPA_40(&data)<<"/4.0"<<endl;
+		cout<<strLine<<setfill(' ');
+		student->CouShow(&data);
+		cout<<strLine;
+
+		system("pause");
+	}
+	return;
+}
+
+void TeaGQCla(void)
+{
+	return;
+}
+
+void TeaGQCou(void)
+{
 	return;
 }
