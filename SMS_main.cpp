@@ -333,8 +333,8 @@ void StuGradesQuery(Student* student)
 	cout<<strStuGQHead1<<student->GetName();
 	cout<<strStuGQHead2<<student->GetId();
 	cout<<strStuGQHead3<<student->GetClass();
-	cout<<strStuGQHead4<<setfill('0')<<setprecision(1)<<student->GPA_40(&data)/10.0<<"/4.0"<<endl;
-	cout<<strLine<<setfill(' ');
+	cout.setf(ios::fixed);
+	cout<<strStuGQHead4<<setprecision(1)<<student->GPA_40(&data)/10.0<<"/4.0"<<endl;
 	student->CouShow(&data);
 	cout<<strLine;
 
@@ -845,8 +845,8 @@ void TeaGQStu(void)
 		cout<<strStuGQHead1<<student->GetName();
 		cout<<strStuGQHead2<<student->GetId();
 		cout<<strStuGQHead3<<student->GetClass();
-		cout<<strStuGQHead4<<setfill('0')<<setprecision(1)<<student->GPA_40(&data)/10.0<<"/4.0"<<endl;
-		cout<<strLine<<setfill(' ');
+		cout.setf(ios::fixed);
+		cout<<strStuGQHead4<<setprecision(1)<<student->GPA_40(&data)/10.0<<"/4.0"<<endl;
 		student->CouShow(&data);
 		cout<<strLine;
 
