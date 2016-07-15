@@ -82,6 +82,7 @@ public:
 	{this->grade[Search(id)]=grade;return;}
 	int GetGrade( long id )		//未处理参数代表课程非已选课程的情况
 	{return grade[Search(id)];}
+	int CheckGrade(void);		//检查未录入成绩的学生个数
 	void StuSort_id(void);		//将学生按学号由小到大冒泡排序
 	void StuSort_grade(void);		//将学生按grade由大到小冒泡排序
 };
@@ -379,6 +380,15 @@ bool CS::Delete(long id)
 	}
 	else
 		return false;
+}
+
+int CS::CheckGrade(void)		//检查未录入成绩的学生个数
+{
+	int n=0;
+	for (int i = 0; i < number; ++i)
+		if(grade[i]==-1)
+			n++;
+	return n;
 }
 
 void CS::StuSort_id(void)		//将学生按学号由小到大冒泡排序

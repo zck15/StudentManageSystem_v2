@@ -446,11 +446,103 @@ void TeaCouChooseManage(void)
 
 void TeaGradesInput(void)
 {
+	do
+	{
+		system("cls");
+		cin.clear();
+		cin.sync();
+		cout<<strTeaGI1;
+		int Number;
+		INPUT_INT_L(Number,0);
+		if(Number==0)	break;
+		Course* course=data.CouSearch(Number);
+		if(course==NULL)
+		{
+			cout<<strTeaGIF1;
+			system("pause");
+		}
+		else
+		{
+			bool clear = true;		//是否清空屏幕并先显示Head
+			do
+			{
+				if(clear)
+				{
+					system("cls");
+					cin.clear();
+					cin.sync();
+					cout<<strTeaGIHead1<<course->GetName()<<strTeaGIHead2<<course->GetNumber();
+					cout<<strTeaGIHead3<<course->GetCredit()<<strTeaGIHead4<<course->CheckGrade()<<endl;
+					cout<<strLine;
+					cout<<strTeaGI2;
+				}
+				long id;
+				INPUT_INT_L(id,-1);
+				if(id==-1)		//查看未录入成绩学生名单
+				{
+					course->StuSort_id();
+					for(int i=0; i<course->Getnumber; i++)
+					{
+						long id=GetStudentId(i);
+						if(GetGrade(id)==-1)
+							data.StuSearch(id)->StuShow();
+					}
+					clear=false;
+				}
+				else if(id==0)	//返回上一级
+				{
+					int n=course->CheckGrade();
+					if(n==0)	//未录入成绩人数为0
+					{
+						cout<<strTeaGIS;
+						system("pause");
+						break;
+					}
+					else		//有学生的成绩未录入 是否还要退出
+					{
+						cout<<strTeaGIConfirm1<<n<<strTeaGIConfirm2;
+						int s;
+						INPUT_INT_LU(s,0,1);
+						if(s==0)
+							break;
+						clear=true;
+					}
+				}
+				else if(course->Search(id)==-1)	//该课程名单中无此学生
+				{
+					cout<<strTeaGIF2;
+					system("pause");
+					clear=true;
+				}
+				else
+				{
+					int s=1;
+					if(course->GetGrade(id)!=-1)	//重复录入提醒
+					{
+						cout<<strTeaGIConfirm3<<course->GetGrade(id);
+						cout<<strTeaGIConfirm4;
+						INPUT_INT_LU(s,0,1)
+					}
+					if(s==1)
+					{
+						Student* student=data.StuSearch(id);
+						cout<<strTeaGI3<<id<<strTeaGI4<<student->GetName();
+						cout<<strTeaGI5<<student->GetClass()<<strTeaGI6;
+						int grade;
+						INPUT_INT_L(grade,-1)
+						if(grade!=-1)
+							course->SetGrade(id,grade);
+					}
+				}
+			}
+		}
+	}while(1);
 	return;
 }
 
 void TeaGradesQuery(void)
 {
+
 	return;
 }
 
