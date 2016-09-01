@@ -30,6 +30,8 @@ public:
 	void CouSort(void);		//将课程按课程编号由小到大冒泡排序
 	int GPA_40(Data *data);	//40满分制
 	void CouShow(Data* data);
+	void Initialize(int n,int cn[], int grade[]);//从文件中读取时用到的初始化函数
+
 };
 
 class Student:public SC
@@ -58,8 +60,12 @@ public:
 	{return Class;}
 	bool PasswordCheck(string pw)
 	{return password==pw;}
+	string GetPassword(void)//存储到文件时使用
+	{return password;}
+
 	Student operator= (Student student);
 	void StuShow(void);
+
 };
 
 class CS
@@ -85,6 +91,7 @@ public:
 	int CheckGrade(void);		//检查未录入成绩的学生个数
 	void StuSort_id(void);		//将学生按学号由小到大冒泡排序
 	void StuSort_grade(void);		//将学生按grade由大到小冒泡排序
+	void Initialize(int n,int id[], int grade[]);//从文件中读取时用到的初始化函数
 };
 
 class Course:public CS
@@ -140,7 +147,7 @@ public:
 	bool AddStu(Student student);
 	bool AddCou(Course course);
 	void DelStuCS(Student* student);	//不考虑无此学生情况，用来删除CS中该学生的成绩
-	void DelCouSC(Course* course);	//不考虑无此课程情况，用来删除SC中该课程的成绩
+	void DelCouSC(Course* course);		//不考虑无此课程情况，用来删除SC中该课程的成绩
 	bool DelStu(long id);
 	bool DelCou(int cn);
 	Student* StuSearch(long id);
@@ -157,6 +164,10 @@ public:
 	{cout<<strStuShowHead<<endl;return;}
 	void CouShow(void);
 	void StuShow(void);
+	//保存文件所用函数
+	friend void EndProcess(void);
+	string GetTeaPassword(void)
+	{return TeaPassword;}
 };
 
 ////函数定义
@@ -292,6 +303,19 @@ void SC::CouShow(Data* data)
 			cout<<setw(18-length(course->GetCredit())/2+length(grade[i])/2)<<grade[i]<<endl;
 		else
 			cout<<setw(18-length(course->GetCredit())/2+4/2)<<"暂无"<<endl;
+	}
+	return;
+}
+
+void SC::Initialize(int n,int cn[], int grade[])
+{
+	this->number=n;
+	this->CourseNumber=new int[n];
+	this->grade=new int[n];
+	for(int i=0; i<n; ++i)
+	{
+		this->CourseNumber[i]=cn[i];
+		this->grade[i]=grade[i];
 	}
 	return;
 }
@@ -454,6 +478,19 @@ void CS::StuSort_grade(void)		//将学生按grade由大到小冒泡排序
 		}
 		lb = nlb;
 	}	while ( ub != lb );
+	return;
+}
+
+void CS::Initialize(int n,int id[], int grade[]);//从文件中读取时用到的初始化函数
+{
+	this->number=n;
+	this->StudentId=new int[n];
+	this->grade=new int[n];
+	for(int i=0; i<n; ++i)
+	{
+		this->StudentId[i]=id[i];
+		this->grade[i]=grade[i];
+	}
 	return;
 }
 

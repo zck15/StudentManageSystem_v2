@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 #include "SMS_DataStructure.h"
 #include "SMS_string.h"
 using namespace std;
@@ -74,9 +75,6 @@ int main()
 			if(QuitConfirm())
 				quit = true;
 			break;
-		// default:
-		// 	cout<<strInputFault;
-		// 	break;
 		}
 	}while(!quit);
 	EndProcess();
@@ -86,6 +84,69 @@ int main()
 
 void StartProcess(void)
 {
+	fstream file(¡°data.dat¡±, ios_base::in);// attempt open for read
+	if (!file)
+	{
+		// file doesn't exist; create a new one
+		file.open(¡°data.dat¡±, ios_base::out); 
+		file.close();
+		return;
+	}
+	else //ok, file exists
+	{
+		int iStudent=0, iCourse=0;
+		string TeaPassword;
+
+		file>>iStudent;
+		for(int i=0; i<iStudent; ++i)
+		{
+			Student temStu;
+			string name;
+			long id;
+			string Class;
+			string password;
+			file>>name>>id>>Class>>password;
+			temStu.SetName(name);
+			temStu.SetId(id);
+			temStu.SetClass(Class);
+			temStu.SetPassword(password);
+
+			int n;
+			file>>n;
+			int *cn=new int[n], *grade=new int[n];
+			for(int i=0; i<n; ++i)
+				file>>cn[i]>>grade[i];
+			temStu.Initialize(n,cn,grade);
+			delete[] cn, grade;
+
+			Data.AddStu(temStu);
+		}
+		file>>iCourse;
+		for(int i=0; i<iCourse; ++i)
+		{
+			Course temCou;
+			string name;
+			int Number;
+			int credit;
+			file>>name>>Number>>credit;
+			temCou.SetName(name);
+			temCou.SetNumber(Number);
+			temCou.SetCredit(credit);
+
+			int n;
+			file>>n;
+			int *id=new int[n], *grade=new int[n];
+			for(int i=0; i<n; ++i)
+				file>>id[i]>>grade[i];
+			temCou.Initialize(n,id,grade);
+			delete[] id, grade;
+
+			Data.AddCou(temCou);
+		}
+		file>>TeaPassword;
+		Data.SetTeaPassword(TeaPassword);
+		file.close();
+	}
 	return;
 }
 
@@ -209,6 +270,46 @@ bool QuitConfirm(void)
 
 void EndProcess(void)
 {
+	fstream file(¡°data.dat¡±, ios_base::out|ios_base::trunc);
+
+	file<<Data.StuNumber<<'\t';
+	for(StuNode* pStuNode=Data.StuHead; pStuNode!=NULL; pStuNode=pStuNode->next)
+	{
+		file<<pStuNode->Student.GetName()<<'\t';
+		file<<pStuNode->Student.GetId()<<'\t';
+		file<<pStuNode->Student.GetClass()<<'\t';
+		file<<pStuNode->Student.GetPassword()<<'\t';
+
+		int n=pStuNode->Student.Getnumber();
+		file<<n<<'\t';
+		for(int i=0; i<n; ++i)
+		{
+			int cn, grade;
+			cn=pStuNode->Student.GetCourseNumber(i);
+			grade=pStuNode->Student.GetGrade(cn);
+			file<<cn<<'\t'<<grade<<'\t';
+		}
+	}
+	file<<Data.CouNumber<<'\t';
+	for(CouNode* pCouNode=Data.CouHead; pCouNode!=NULL; pCouNode=pCouNode->next)
+	{
+		file<<pCouNode->Course.GetName()<<'\t';
+		file<<pCouNode->Course.GetNumber()<<'\t';
+		file<<pCouNode->Course.GetCredit()<<'\t';
+		
+		int n=pCouNode->Course.Getnumber();
+		file<<n<<'\t';
+		for(int i=0; i<n; ++i)
+		{
+			long id;
+			int grade;
+			id=pCouNode->Course.GetStudentId(i);
+			grade=pCouNode->Course.GetGrade(id);
+			file<<id<<'\t'<<grade<<'\t';
+		}
+	}
+	file<<Data.GetTeaPassword();
+	file.close();
 	return;
 }
 
@@ -857,6 +958,24 @@ void TeaGQStu(void)
 
 void TeaGQCla(void)
 {
+	system("cls");
+	cin.clear();
+	cin.sync();
+
+	cout<<strTeaGQCla1;
+	string Class;
+	cin>>Class;
+	
+	int Number;
+	INPUT_INT_L(Number,0);
+	if(Number==0)	break;
+	Course* course=data.CouSearch(Number);
+	if(course==NULL)	cout<<strTeaGQClaF;
+	else
+	{
+		course->StuSort_grade();
+		
+	}
 	return;
 }
 

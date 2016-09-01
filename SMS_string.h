@@ -1,3 +1,4 @@
+#pragma once
 #define strInputFault "输入错误！请以正确格式输入！\n"
 #define strCouShow1Head "\
          课程名称          课程编号          课程学分          选课人数"
