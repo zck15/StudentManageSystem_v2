@@ -15,6 +15,7 @@ protected:
 	int number;
 public:
 	SC():number(0),CourseNumber(NULL),grade(NULL){}
+	SC(SC &sc);	//复制构造函数，进行深复制
 	~SC()
 	{delete[]CourseNumber;delete[]grade;}	//delete[] NULL 不会出错
 
@@ -63,7 +64,7 @@ public:
 	string GetPassword(void)//存储到文件时使用
 	{return password;}
 
-	Student operator= (Student student);
+	void operator= (Student student);
 	void StuShow(void);
 
 };
@@ -76,6 +77,7 @@ protected:
 	int number;
 public:
 	CS():number(0),StudentId(NULL),grade(NULL){}
+	CS(CS &cs);	//复制构造函数，进行深复制
 	~CS()
 	{delete[]StudentId;delete[]grade;}	//delete[] NULL 不会出错
 	
@@ -189,6 +191,28 @@ int length(long x)
 }
 
 ////SC类函数定义
+SC::SC(SC &sc)
+{
+	number=sc.number;
+	if(number==0)
+	{
+		CourseNumber=NULL;
+		grade=NULL;
+		return;
+	}
+	else
+	{
+		CourseNumber=new int[number];
+		grade=new int[number];
+		for(int i=0; i<number; ++i)
+		{
+			CourseNumber[i]=sc.CourseNumber[i];
+			grade[i]=sc.grade[i];
+		}
+		return;
+	}
+}
+
 int SC::Search(int cn)		//查找课程编号为cn的课所在位置，无结果返回-1
 {
 	for(int i=0; i<number; ++i)
@@ -322,7 +346,7 @@ void SC::Initialize(int n,int cn[], int grade[])
 }
 
 ////Student类函数定义
-Student Student::operator= (Student student)
+void Student::operator= (Student student)
 {
 	name = student.name;
 	id = student.id;
@@ -333,7 +357,7 @@ Student Student::operator= (Student student)
 	{
 		CourseNumber=NULL;
 		grade=NULL;
-		return *this;
+		return;
 	}
 	//else
 	CourseNumber = new int[number];
@@ -343,7 +367,7 @@ Student Student::operator= (Student student)
 		CourseNumber[i]=student.CourseNumber[i];
 		grade[i]=student.grade[i];
 	}
-	return *this;
+	return;
 }
 
 void Student::StuShow(void)
@@ -355,6 +379,28 @@ void Student::StuShow(void)
 }
 
 ////CS类函数定义
+CS::CS(CS &cs)
+{
+	number=cs.number;
+	if(number==0)
+	{
+		StudentId=NULL;
+		grade=NULL;
+		return;
+	}
+	else
+	{
+		StudentId=new int[number];
+		grade=new int[number];
+		for(int i=0; i<number; ++i)
+		{
+			StudentId[i]=cs.StudentId[i];
+			grade[i]=cs.grade[i];
+		}
+		return;
+	}
+}
+
 int CS::Search(long id)		//查找学号为id的学生所在位置，无结果返回-1
 {
 	for(int i=0; i<number; ++i)

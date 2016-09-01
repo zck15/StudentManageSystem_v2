@@ -117,9 +117,11 @@ void StartProcess(void)
 			for(int i=0; i<n; ++i)
 				file>>cn[i]>>grade[i];
 			temStu.Initialize(n,cn,grade);
-			delete[] cn, grade;
+			delete[] cn;
+			delete[] grade;
 
 			data.AddStu(temStu);
+			{}
 		}
 		file>>iCourse;
 		for(int i=0; i<iCourse; ++i)
@@ -139,7 +141,8 @@ void StartProcess(void)
 			for(int i=0; i<n; ++i)
 				file>>id[i]>>grade[i];
 			temCou.Initialize(n,id,grade);
-			delete[] id, grade;
+			delete[] id;
+			delete[] grade;
 
 			data.AddCou(temCou);
 		}
