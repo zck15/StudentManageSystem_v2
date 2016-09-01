@@ -84,11 +84,11 @@ int main()
 
 void StartProcess(void)
 {
-	fstream file(¡°data.dat¡±, ios_base::in);// attempt open for read
+	fstream file("data.dat", ios_base::in);// attempt open for read
 	if (!file)
 	{
 		// file doesn't exist; create a new one
-		file.open(¡°data.dat¡±, ios_base::out); 
+		file.open("data.dat", ios_base::out); 
 		file.close();
 		return;
 	}
@@ -119,7 +119,7 @@ void StartProcess(void)
 			temStu.Initialize(n,cn,grade);
 			delete[] cn, grade;
 
-			Data.AddStu(temStu);
+			data.AddStu(temStu);
 		}
 		file>>iCourse;
 		for(int i=0; i<iCourse; ++i)
@@ -141,10 +141,10 @@ void StartProcess(void)
 			temCou.Initialize(n,id,grade);
 			delete[] id, grade;
 
-			Data.AddCou(temCou);
+			data.AddCou(temCou);
 		}
 		file>>TeaPassword;
-		Data.SetTeaPassword(TeaPassword);
+		data.SetTeaPassword(TeaPassword);
 		file.close();
 	}
 	return;
@@ -270,10 +270,10 @@ bool QuitConfirm(void)
 
 void EndProcess(void)
 {
-	fstream file(¡°data.dat¡±, ios_base::out|ios_base::trunc);
+	fstream file("data.dat", ios_base::out|ios_base::trunc);
 
-	file<<Data.StuNumber<<'\t';
-	for(StuNode* pStuNode=Data.StuHead; pStuNode!=NULL; pStuNode=pStuNode->next)
+	file<<data.StuNumber<<'\t';
+	for(StuNode* pStuNode=data.StuHead; pStuNode!=NULL; pStuNode=pStuNode->next)
 	{
 		file<<pStuNode->Student.GetName()<<'\t';
 		file<<pStuNode->Student.GetId()<<'\t';
@@ -290,8 +290,8 @@ void EndProcess(void)
 			file<<cn<<'\t'<<grade<<'\t';
 		}
 	}
-	file<<Data.CouNumber<<'\t';
-	for(CouNode* pCouNode=Data.CouHead; pCouNode!=NULL; pCouNode=pCouNode->next)
+	file<<data.CouNumber<<'\t';
+	for(CouNode* pCouNode=data.CouHead; pCouNode!=NULL; pCouNode=pCouNode->next)
 	{
 		file<<pCouNode->Course.GetName()<<'\t';
 		file<<pCouNode->Course.GetNumber()<<'\t';
@@ -308,7 +308,7 @@ void EndProcess(void)
 			file<<id<<'\t'<<grade<<'\t';
 		}
 	}
-	file<<Data.GetTeaPassword();
+	file<<data.GetTeaPassword();
 	file.close();
 	return;
 }
@@ -958,24 +958,24 @@ void TeaGQStu(void)
 
 void TeaGQCla(void)
 {
-	system("cls");
-	cin.clear();
-	cin.sync();
+	// system("cls");
+	// cin.clear();
+	// cin.sync();
 
-	cout<<strTeaGQCla1;
-	string Class;
-	cin>>Class;
+	// cout<<strTeaGQCla1;
+	// string Class;
+	// cin>>Class;
 	
-	int Number;
-	INPUT_INT_L(Number,0);
-	if(Number==0)	break;
-	Course* course=data.CouSearch(Number);
-	if(course==NULL)	cout<<strTeaGQClaF;
-	else
-	{
-		course->StuSort_grade();
+	// int Number;
+	// INPUT_INT_L(Number,0);
+	// if(Number==0)	break;
+	// Course* course=data.CouSearch(Number);
+	// if(course==NULL)	cout<<strTeaGQClaF;
+	// else
+	// {
+	// 	course->StuSort_grade();
 		
-	}
+	// }
 	return;
 }
 

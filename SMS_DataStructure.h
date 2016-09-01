@@ -481,7 +481,7 @@ void CS::StuSort_grade(void)		//将学生按grade由大到小冒泡排序
 	return;
 }
 
-void CS::Initialize(int n,int id[], int grade[]);//从文件中读取时用到的初始化函数
+void CS::Initialize(int n,int id[], int grade[])//从文件中读取时用到的初始化函数
 {
 	this->number=n;
 	this->StudentId=new int[n];
