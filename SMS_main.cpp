@@ -708,6 +708,7 @@ void TeaGradesChange(void)
 				INPUT_INT_L(id,-1);
 				if(id==-1)		//查看该课程的所有学生成绩
 				{
+					course->StuSort_grade();
 					system("cls");
 					course->CouShow(&data);
 					cout<<strLine;
@@ -1019,6 +1020,9 @@ void TeaGQStu(void)
 	while(1)
 	{
 		system("cls");
+		cin.clear();
+		cin.sync();
+
 		cout<<strTeaGQStu1;
 		INPUT_INT_L(id,0);
 		if(id==0)	break;
@@ -1056,6 +1060,10 @@ void TeaGQCla(void)
 			break;
 		do
 		{
+			system("cls");
+			cin.clear();
+			cin.sync();
+
 			cout<<strTeaGQCla2;
 			int Number;
 			INPUT_INT_L(Number,0);
@@ -1077,5 +1085,26 @@ void TeaGQCla(void)
 
 void TeaGQCou(void)
 {
+	do
+	{	
+		system("cls");
+		cin.clear();
+		cin.sync();
+
+		cout<<strTeaGQCou1;
+		int Number;
+		INPUT_INT_L(Number,0);
+		if(Number==0)	break;
+		Course* course=data.CouSearch(Number);
+		if(course==NULL)	cout<<strTeaGQCouF;
+		else
+		{
+			course->StuSort_grade();
+			system("cls");
+			course->CouShow(&data);
+			cout<<strLine;
+			system("pause");
+		}
+	}while(1);
 	return;
 }

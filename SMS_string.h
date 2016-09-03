@@ -209,9 +209,12 @@
 
 #define strTeaGQStu1 "请输入学生学号（0.返回上一级）："
 
-#define strTeaGQCla1 "请输入班级："
-#define strTeaGQCla2 "请输入课程编号："
+#define strTeaGQCla1 "请输入班级（0.返回上一级）："
+#define strTeaGQCla2 "请输入课程编号（0.返回上一级）："
 #define strTeaGQClaF "无此课程！\n"
+
+#define strTeaGQCou1 "请输入课程编号（0.返回上一级）："
+#define strTeaGQCouF "无此课程！\n"
 
 #define strStuCC1 "所有课程：\n"
 #define strStuCC2 "已选课程：\n"
