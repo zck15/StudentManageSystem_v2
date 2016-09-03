@@ -176,6 +176,25 @@
 #define strTeaGIConfirm4 "。是否要修改？（1.是 0.否）\n"
 #define strTeaGIConfirm5 "该课程所有学生的成绩均已登记，是否返回上一级？（1.继续修改 0.返回上一级）\n"
 
+#define strTeaGC1 "请输入课程编号（0.返回上一级）：\n"
+#define strTeaGC2 "请输入学生学号（0.返回上一级 -1.查看所有学生成绩）：\n"
+#define strTeaGC3 "学号："
+#define strTeaGC4 "，姓名："
+#define strTeaGC5 "，班级："
+#define strTeaGC6 "，原成绩为："
+#define strTeaGC7 "，修改成绩为（-1.取消）："
+#define strTeaGC8 "无"
+#define strTeaGCF1 "无此课程！"
+#define strTeaGCF2 "该课程的学生名单中无此学生！"
+#define strTeaGCConfirm1 "该课程尚有"
+#define strTeaGCConfirm2 "名学生的成绩未登记，确定要退出么？（0.退出 1.继续录入）\n"
+#define strTeaGCConfirm3 "该学生的成绩尚未录入，"
+#define strTeaGCConfirm4 "是否要直接录入？（1.是 0.否）\n"
+#define strTeaGCConfirm5 "该课程所有学生的成绩均未登记，请使用录入功能登记学生成绩。\n"
+#define strTeaGCS1 "的成绩已成功由"
+#define strTeaGCS2 "修改为"
+#define strTeaGCS3 "！"
+
 #define strTeaGQMenu "\n\n\n\n\n\n\
                                 ☆成绩查询☆\n\
                            ▇▇▇▇▇▇▇▇▇▇▇\n\
@@ -190,7 +209,9 @@
 
 #define strTeaGQStu1 "请输入学生学号（0.返回上一级）："
 
-
+#define strTeaGQCla1 "请输入班级："
+#define strTeaGQCla2 "请输入课程编号："
+#define strTeaGQClaF "无此课程！\n"
 
 #define strStuCC1 "所有课程：\n"
 #define strStuCC2 "已选课程：\n"

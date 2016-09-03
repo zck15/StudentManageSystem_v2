@@ -120,6 +120,8 @@ public:
 	Course operator= (Course course);
 	void CouShow1(void);		//显示课程信息时使用
 	void CouShow2(void);		//显示个人成绩单时使用
+	void CouShow(Data* data);	//显示该课程所有学生成绩
+	void CouShow(Data* data, string Class);	//显示该课程某班级所有学生成绩
 };
 
 struct StuNode
@@ -580,6 +582,45 @@ void Course::CouShow2(void)			//显示个人成绩单时使用
 	cout<<setw(13+name.length()/2)<<name;
 	cout<<setw(18-name.length()/2+length(Number)/2)<<Number;
 	cout<<setw(18-length(Number)/2+length(credit)/2)<<credit;
+	return;
+}
+
+void Course::CouShow(Data* data)	//显示该课程所有学生成绩
+{
+	cout<<setw(40+name.length()/2)<<name<<endl;
+	cout<<strLine;
+	for(int i=0; i<number; ++i)
+	{
+		Student* student = data->StuSearch(StudentId[i]);
+		cout<<setw(13+(student->GetName()).length()/2)<<student->GetName();
+		cout<<setw(18-(student->GetName()).length()/2+length(StudentId[i])/2)<<StudentId[i];
+		cout<<setw(18-length(StudentId[i])/2+(student->GetClass()).length()/2)<<student->GetClass();
+		if(grade[i]!=-1)
+			cout<<setw(18-(student->GetClass()).length()/2+length(grade[i])/2)<<grade[i]<<endl;
+		else
+			cout<<setw(18-(student->GetClass()).length()/2+4/2)<<"暂无"<<endl;
+	}
+	return;
+}
+
+void Course::CouShow(Data* data, string Class)	//显示该课程某班级所有学生成绩
+{
+	cout<<setw(40+name.length()/2)<<name<<endl;
+	cout<<setw(40+Class.length()/2)<<Class<<endl;
+	cout<<strLine;
+	for(int i=0; i<number; ++i)
+	{
+		Student* student = data->StuSearch(StudentId[i]);
+		if(student->GetClass()==Class)
+		{
+			cout<<setw(20+(student->GetName()).length()/2)<<student->GetName();
+			cout<<setw(20-(student->GetName()).length()/2+length(StudentId[i])/2)<<StudentId[i];
+			if(grade[i]!=-1)
+				cout<<setw(20-length(StudentId[i])/2+length(grade[i])/2)<<grade[i]<<endl;
+			else
+				cout<<setw(20-length(StudentId[i])/2+4/2)<<"暂无"<<endl;
+		}
+	}
 	return;
 }
 

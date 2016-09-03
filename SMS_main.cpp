@@ -126,6 +126,7 @@ void StartProcess(void)
 		file>>iCourse;
 		for(int i=0; i<iCourse; ++i)
 		{
+			
 			Course temCou;
 			string name;
 			int Number;
@@ -293,6 +294,7 @@ void EndProcess(void)
 			file<<cn<<'\t'<<grade<<'\t';
 		}
 	}
+
 	file<<data.CouNumber<<'\t';
 	for(CouNode* pCouNode=data.CouHead; pCouNode!=NULL; pCouNode=pCouNode->next)
 	{
@@ -671,6 +673,86 @@ void TeaGradesInput(void)
 
 void TeaGradesChange(void)
 {
+	do
+	{
+		system("cls");
+		cin.clear();
+		cin.sync();
+		cout<<strTeaGC1;
+		int Number;
+		INPUT_INT_L(Number,0);
+		if(Number==0)	break;
+		Course* course=data.CouSearch(Number);
+		if(course==NULL)
+		{
+			cout<<strTeaGCF1;
+			system("pause");
+		}
+		else
+		{
+			do
+			{
+				if(course->CheckGrade()==course->Getnumber())	//所有学生成绩均未登记
+				{
+					system("cls");
+					cout<<strTeaGCConfirm5;
+					system("pause");
+					break;
+				}
+				system("cls");
+				cin.clear();
+				cin.sync();
+
+				cout<<strTeaGC2;
+				long id;
+				INPUT_INT_L(id,-1);
+				if(id==-1)		//查看该课程的所有学生成绩
+				{
+					system("cls");
+					course->CouShow(&data);
+					cout<<strLine;
+					system("pause");
+				}
+				else if(id==0)	//返回上一级
+					break;
+				else if(course->Search(id)==-1)	//该课程名单中无此学生
+				{
+					cout<<strTeaGCF2;
+					system("pause");
+				}
+				else
+				{
+					int s=1;
+					int preGrade=course->GetGrade(id);
+					if(preGrade==-1)	//成绩尚未录入提示
+					{
+						cout<<strTeaGCConfirm3<<strTeaGCConfirm4;
+						INPUT_INT_LU(s,0,1);
+					}
+					if(s==1)
+					{
+						Student* student=data.StuSearch(id);
+						cout<<strTeaGC3<<id<<strTeaGC4<<student->GetName();
+						cout<<strTeaGC5<<student->GetClass()<<strTeaGC6;
+						if(preGrade==-1)
+							cout<<strTeaGC8<<strTeaGC7;
+						else
+							cout<<preGrade<<strTeaGC7;
+						int grade;
+						INPUT_INT_L(grade,-1);
+						if(grade!=-1)
+						{
+							student->SetGrade(course->GetNumber(),grade);
+							course->SetGrade(id,grade);
+							cout<<student->GetName()<<strTeaGCS1<<preGrade;
+							cout<<strTeaGCS2<<grade<<strTeaGCS3;
+							system("pause");
+						}
+					}
+				}
+			}while(1);
+		}
+	}while(1);
 	return;
 }
 
@@ -961,24 +1043,35 @@ void TeaGQStu(void)
 
 void TeaGQCla(void)
 {
-	// system("cls");
-	// cin.clear();
-	// cin.sync();
+	do
+	{
+		system("cls");
+		cin.clear();
+		cin.sync();
 
-	// cout<<strTeaGQCla1;
-	// string Class;
-	// cin>>Class;
-	
-	// int Number;
-	// INPUT_INT_L(Number,0);
-	// if(Number==0)	break;
-	// Course* course=data.CouSearch(Number);
-	// if(course==NULL)	cout<<strTeaGQClaF;
-	// else
-	// {
-	// 	course->StuSort_grade();
-		
-	// }
+		cout<<strTeaGQCla1;
+		string Class;
+		cin>>Class;
+		if(Class=="0")
+			break;
+		do
+		{
+			cout<<strTeaGQCla2;
+			int Number;
+			INPUT_INT_L(Number,0);
+			if(Number==0)	break;
+			Course* course=data.CouSearch(Number);
+			if(course==NULL)	cout<<strTeaGQClaF;
+			else
+			{
+				course->StuSort_grade();
+				system("cls");
+				course->CouShow(&data,Class);
+				cout<<strLine;
+				system("pause");
+			}
+		}while(1);
+	}while(1);
 	return;
 }
 
